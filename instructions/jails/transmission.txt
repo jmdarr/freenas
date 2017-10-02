@@ -1,0 +1,28 @@
+When we install transmission we want it to be able to use the same permissions
+as the files on our storage-provided dataset. In my case, my 'media' user has
+the uid of 1002. If I run 'id media' on my transmission jail, I can see that
+this user is available to the jail.
+
+To do this, ensure that this user is persisted into the jail by using the
+command:
+
+id <user>
+
+In my case, the result is:
+
+root@transmission_1:/ # id media
+uid=1002(media) gid=1002(media) groups=1002(media)
+
+Thus, I can safely set in my rc.conf in my transmission jail:
+
+transmission_user="media"
+transmission_group="media"
+
+This will allow transmission to run with these user permissions, which are
+usually sane. If you have already started transmission before, please stop
+transmission and then run the following:
+
+find / -user transmission -exec chown media {} \;
+find / -group transmission -exec chgrp media {} \;
+
+Once this has been ran you are safe to start the service again.
