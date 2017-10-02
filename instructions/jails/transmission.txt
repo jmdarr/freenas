@@ -26,3 +26,14 @@ find / -user transmission -exec chown media {} \;
 find / -group transmission -exec chgrp media {} \;
 
 Once this has been ran you are safe to start the service again.
+
+* NOTE * To change the settings below without transmission overwriting your
+* changes, first stop the transmission service. * /NOTE *
+
+In order to have transmission use in-progress and completed dirs for
+downloads, edit the settings.json file located at
+/var/db/transmission/settings.json. Change the following settings:
+
+"download-dir" - the completed downloads path
+"incomplete-dir" - the in-progress path
+"incomplete-dir-enabled" - set to true
