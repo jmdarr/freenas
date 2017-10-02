@@ -2,6 +2,8 @@
 
 portsnap fetch
 portsnap extract
+cd /usr/ports/converters/libiconv/
+make deinstall
 cd /usr/ports/security/openvpn
 make install clean
 mkdir -p /usr/local/etc/openvpn
