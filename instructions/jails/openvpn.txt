@@ -1,0 +1,39 @@
+source: https://tblog.myriad.ca/?p=179
+
+* NOTE * Requires FreeNAS 9.10 STABLE
+
+Instructions:
+1. Get your TorGuard config and put it in the /usr/local/etc/openvpn/openvpn.conf file.
+2. In the above mentioned file, sed s/auth-user-pass/auth-user-pass <PATH TO YOUR AUTH FILE>/'
+3. In the above mentioned auth file, put your TorGuard user and pass, like so:
+
+USERNAME
+PASSWORD
+
+4. Get the ipfw.rules config and place it in /etc/ipfw.rules. Configure for your LAN range.
+5. Get the check_openvpn.sh script, place it in /root/check_openvpn.sh and set 755 perms on the file.
+6. Adjust the /root/check_openvpn.sh script to search for the country name you configured your VPN to use. See 7b to determine this.
+7. Once these steps are complete, run:
+
+service ipfw start
+service openvpn start
+
+Steps for troubleshooting:
+7a. wget -qO - http://icanhazip.com <-- shows ip
+7b. geoiplookup <IP> - shows country lookup of IP
+7c. when services fail to start, check /var/log/messages
+
+
+---- scripted section ----
+
+#!/usr/bin/env bash
+
+cd /etc
+portsnap fetch
+portsnap extract
+cd /usr/ports/security/openvpn
+make install clean
+mkdir -p /usr/local/etc/openvpn
+echo -e 'openvpn_enable=”YES”\nopenvpn_configfile=”/usr/local/etc/openvpn/openvpn.conf”' >> /etc/rc.conf
+echo -e 'firewall_enable="YES"\nfirewall_script="/etc/ipfw.rules"' >> /etc/rc.conf
+env ASSUME_ALWAYS_YES=YES pkg install geoip
