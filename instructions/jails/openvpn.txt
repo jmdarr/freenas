@@ -1,4 +1,6 @@
-source: https://tblog.myriad.ca/?p=179
+sources:
+ https://tblog.myriad.ca/?p=179
+ https://www.reddit.com/r/freenas/comments/41fhz3/configuration_guide_for_openvpn_and_ipfw_so_that/
 
 * NOTE * Requires FreeNAS 9.10 STABLE
 
