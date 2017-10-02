@@ -5,7 +5,7 @@ sources:
 * NOTE * Requires FreeNAS 9.10 STABLE
 
 Instructions:
-1. Run the scripts/jails/openvpn_install.sh script.
+1. Run the scripts/jails/install_openvpn.sh script.
 2. Get your TorGuard config and put it in the /usr/local/etc/openvpn/openvpn.conf file.
 3. In the above mentioned file, sed s/auth-user-pass/auth-user-pass <PATH TO YOUR AUTH FILE>/'
 4. In the above mentioned auth file, put your TorGuard user and pass, like so:
